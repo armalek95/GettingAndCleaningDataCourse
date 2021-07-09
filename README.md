@@ -8,3 +8,10 @@ I contains the following files:
 CodeBook.md - file containing some extra explanations of the data and how I pulled it together  
 run_analysis.R - file containing the script for the entire assignment, from data loading to tidy dataset  
 UCI HAR Dataset - dataset folder provided for the assignment and from where the data is loaded for the assignment  
+
+
+An easy way to read the file is to use:  
+
+data <- read.table("tidy_dataset.txt", header = TRUE)  
+View(data)
+
