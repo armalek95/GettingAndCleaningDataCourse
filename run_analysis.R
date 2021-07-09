@@ -15,6 +15,9 @@ names(train_labels) <- "label"
 #load the training set data
 train_set <- read.table("UCI HAR Dataset/train/X_train.txt")
 
+#load the training set data
+features <- read.table("UCI HAR Dataset/features.txt")
+
 #column bind the labels to the respective data sets
 test_data <- cbind(test_labels,test_set)
 train_data <- cbind(train_labels,train_set)
@@ -28,16 +31,16 @@ rm(train_set)
 #row bind the training and test data sets
 data <- rbind(test_data,train_data)
 
+#change the names of the labels
+names(data) <- c("label",features$V2)
+
 #unload unnecessary data
 rm(test_data)
 rm(train_data)
+rm(features)
 
-#compute mean and sd functions across colums V2:V561 name them mean and st.dev, 
-#respectively, and select label, mean, and st.dev columns from the result
-#save as a new tibble named "extraction"
-extraction <- data %>% rowwise %>% 
-  mutate(mean = mean(c_across(V2:V561)), st.dev = sd(c_across(V2:V561), na.rm = TRUE)) %>%
-  select(label, mean, st.dev)
+#select only the ones that contain mean or standard deviation
+extraction <- data %>% select(label,contains("mean()"),contains("std()"))
 
 #unload unnecessary data
 rm(data)
@@ -74,15 +77,14 @@ rm(test_subject)
 rm(train_subject)
 
 #new dataset with subject information
-subject_activity <- extraction %>% mutate(subject = "")
-subject_activity$subject <- subject$subject
+subject_activity <- cbind(subject,extraction)
 
 #remove unnecessary data
 rm(subject)
 
 #group subject_activity data set by activity and subject and 
 #then summarize the data by averaging mean and standard deviation columns
-subject_activity %>% group_by(activity,subject) %>% summarize(mean = mean(mean), st.dev = mean(st.dev))
+subject_activity %>% group_by(activity,subject) %>% summarize_all(mean)
 
 #create tidy dataset
 write.table(subject_activity, file ="tidy_dataset.txt", row.names = FALSE)
