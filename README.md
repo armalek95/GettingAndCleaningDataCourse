@@ -5,6 +5,6 @@ This repository was established for the peer review of my last assignment of the
 
 I contains the following files:
 
-CodeBook.md - file containing some extra explanations of the data and how I pulled it together
-run_analysis.R - file containing the script for the entire assignment, from data loading to tidy dataset
-UCI HAR Dataset - dataset provided for the assignment and from where the data is loaded for the assignment
+CodeBook.md - file containing some extra explanations of the data and how I pulled it together  
+run_analysis.R - file containing the script for the entire assignment, from data loading to tidy dataset  
+UCI HAR Dataset - dataset provided for the assignment and from where the data is loaded for the assignment  
