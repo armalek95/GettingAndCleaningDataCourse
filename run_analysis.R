@@ -84,5 +84,7 @@ rm(subject)
 #then summarize the data by averaging mean and standard deviation columns
 subject_activity %>% group_by(activity,subject) %>% summarize(mean = mean(mean), st.dev = mean(st.dev))
 
+#create tidy dataset
+write.table(subject_activity, file ="tidy_dataset.txt", row.names = FALSE)
 
                                            
